@@ -4,6 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+
+Vue.use({
+  install: function(Vue, options){
+      Vue.prototype.$jQuery = require('jquery'); // you'll have this.$jQuery anywhere in your vue project
+  }
+})
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
