@@ -1,19 +1,30 @@
 <script>
-import { Bar, Line } from 'vue-chartjs'
-
-$.getJSON('./assets/platform.json', function(json){
-  var labels = json.map(function(item){
-    return item.platform
-  })
-})
+import { Bar } from 'vue-chartjs'
+import $ from 'jQuery'
 
 export default {
   name: 'graph',
   extends: Bar,
+  data () {
+    return {
+      labels: null
+    }
+  },
   mounted () {
-    // Overwriting base render method with actual data.
-    this.renderChart({
-      labels: labels,
+    this.getJSON()
+    this.renderChart()
+  },
+  methods: {
+    getJSON: function () {
+      $.getJSON('./assets/platform.json', (json) => {
+        this.labels = json.map(function (item) {
+          return item.platform
+        })
+      })
+    },
+    renderChart: function (labels, datasets) {
+      console.info(this.labels)
+      labels: this.labels
       datasets: [
         {
           label: 'Platform used',
@@ -21,7 +32,8 @@ export default {
           data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
         }
       ]
-    })
+      // ici fait ce que tu veux avec le label
+    }
   }
 }
 
