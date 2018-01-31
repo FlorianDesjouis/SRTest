@@ -1,39 +1,33 @@
 <script>
 import { Bar } from 'vue-chartjs'
-import $ from 'jQuery'
+
+const platformJSON = require('../assets/platform.json')
 
 export default {
   name: 'graph',
   extends: Bar,
   data () {
     return {
-      labels: null
+      datacollection: {
+        labels: ['January', 'February'],
+        datasets: [
+          {
+            label: 'Data One',
+            backgroundColor: '#f87979',
+            data: [40, 20]
+          },
+          {
+            label: 'Data One',
+            backgroundColor: '#f87954',
+            data: [10, 15]
+          }
+        ]
+      }
     }
   },
   mounted () {
-    this.getJSON()
-    this.renderChart()
-  },
-  methods: {
-    getJSON: function () {
-      $.getJSON('./assets/platform.json', (json) => {
-        this.labels = json.map(function (item) {
-          return item.platform
-        })
-      })
-    },
-    renderChart: function (labels, datasets) {
-      console.info(this.labels)
-      labels: this.labels
-      datasets: [
-        {
-          label: 'Platform used',
-          backgroundColor: '#f87979',
-          data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-        }
-      ]
-      // ici fait ce que tu veux avec le label
-    }
+    console.info(platformJSON)
+    this.renderChart(this.datacollection, {responsive: true, maintainAspectRatio: false})
   }
 }
 
